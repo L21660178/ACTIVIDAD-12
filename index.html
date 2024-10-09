@@ -1,0 +1,187 @@
+<!-- ACTIVIDAD 12: 
+
+OBJETIVO: aplicar lógica matemática en JavaScript y manipulación de eventos para crear una calculadora funcional.
+DESCRIPCION: crear una calculadora básica que permita realizar operaciones 
+aritméticas simples (suma, resta, multiplicación y división)
+
+ALUMNA: AMERICA JAZMIN ESTRADA HERNANDEZ 
+ -->
+
+ <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Básica</title>
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #1b2735 0%, #090a0f 100%);
+            color: white;
+        }
+
+        /* Estilos de la calculadora */
+        .calculator {
+            background-color: #2c3e50;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            max-width: 350px;
+            width: 100%;
+            display: grid;
+            grid-template-rows: auto 1fr auto;
+            gap: 15px;
+        }
+
+        .calculator-screen {
+            width: 100%;
+            height: 60px;
+            border: none;
+            background-color: #34495e;
+            color: white;
+            text-align: right;
+            font-size: 2.2rem;
+            padding-right: 10px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .calculator-keys {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr) 1fr; /* 3 columnas de números y 1 para operadores */
+            grid-gap: 15px;
+        }
+
+        .calculator-keys button {
+            height: 60px;
+            background-color: #34495e;
+            border: none;
+            font-size: 1.5rem;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.1s;
+            color: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .calculator-keys button:active {
+            transform: scale(0.95);
+        }
+
+        .calculator-keys button:hover {
+            background-color: #3b536b;
+        }
+
+        .calculator-keys button.operator {
+            background-color: #e67e22;
+            color: white;
+            grid-column: 4; /* Coloca los operadores en la 4ta columna */
+        }
+
+        .calculator-keys button.operator:hover {
+            background-color: #d35400;
+        }
+
+        .calculator-keys button.clear,
+        .calculator-keys button.equal-sign {
+            grid-column: span 2; 
+        }
+
+        .calculator-keys button.clear {
+            background-color: #e74c3c;
+        }
+
+        .calculator-keys button.clear:hover {
+            background-color: #c0392b;
+        }
+
+        .calculator-keys button.equal-sign {
+            background-color: #2ecc71;
+        }
+
+        .calculator-keys button.equal-sign:hover {
+            background-color: #27ae60;
+        }
+
+        /* Estilo especial para el botón "0" */
+        .calculator-keys button.zero {
+            grid-column: span 2; /* Ocupa 2 columnas */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="calculator">
+        <!-- Pantalla de la calculadora -->
+        <input type="text" class="calculator-screen" value="" disabled>
+
+        <!-- Botones de la calculadora -->
+        <div class="calculator-keys">
+            <button type="button" value="7">7</button>
+            <button type="button" value="8">8</button>
+            <button type="button" value="9">9</button>
+            <button type="button" class="operator" value="/">÷</button>
+
+            <button type="button" value="4">4</button>
+            <button type="button" value="5">5</button>
+            <button type="button" value="6">6</button>
+            <button type="button" class="operator" value="*">×</button>
+
+            <button type="button" value="1">1</button>
+            <button type="button" value="2">2</button>
+            <button type="button" value="3">3</button>
+            <button type="button" class="operator" value="-">−</button>
+
+            <button type="button" class="zero" value="0">0</button>
+            <button type="button" value=".">.</button>
+            <button type="button" class="operator" value="+">+</button>
+
+            <button type="button" class="clear" value="clear">AC</button>
+            <button type="button" class="equal-sign" value="=">=</button>
+        </div>
+    </div>
+
+    <script>
+        // Obtener elementos de la calculadora
+        const screen = document.querySelector('.calculator-screen');
+        const buttons = document.querySelectorAll('.calculator-keys button');
+        let currentInput = '';  // Almacena el número actual o la operación
+
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                const value = button.value;
+
+                // Si el botón es "AC", limpiar pantalla
+                if (value === 'clear') {
+                    currentInput = '';
+                    screen.value = '';
+                } 
+                // Si es el botón "=", ejecutar la operación
+                else if (value === '=') {
+                    try {
+                        currentInput = eval(currentInput);  // Ejecuta la operación
+                        screen.value = currentInput;
+                    } catch (error) {
+                        screen.value = 'Error';  // Si la operación es inválida
+                    }
+                } 
+                // Agregar operadores o números a la pantalla
+                else {
+                    currentInput += value;
+                    screen.value = currentInput;
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
+
+ 
